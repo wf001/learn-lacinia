@@ -1,0 +1,32 @@
+spectaql:
+  displayAllServers: true
+
+introspection:
+  removeTrailingPeriodFromDescriptions: false
+  schemaFile: ./backend/lacinia/resources/schema.graphql
+  queryNameStrategy: capitalizeFirst
+  fieldExpansionDepth: 2
+
+  spectaqlDirective:
+    enable: true
+
+extensions:
+  graphqlScalarExamples: true
+
+info:
+  title: Sakila GraphQL API Reference
+  description: ""
+  contact:
+    url: http://github.com/wf001
+    email: wf001@diax.xyz
+  license:
+    name: MIT
+    url: https://mit-license.org
+
+servers:
+  - url: http://localhost:11004/api/graphql
+    description: Local Server(Lacinia)
+  - url: http://localhost:11003/api/graphql
+    description: Local Server(Apollo)
+  - url: https://api-learn-lacinia.mkdirp.com/api/graphql
+    description: Live demo

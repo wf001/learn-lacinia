@@ -1,0 +1,538 @@
+openapi: 3.1.0
+info:
+  version: 0.1.0
+  title: Sakila REST API Reference
+  contact:
+    url: https://github.com/wf001
+    email: wf001@diax.xyz
+servers:
+  - url: '{host}'
+    variables:
+      host:
+        default: localhost:11004
+        enum:
+          - http://localhost:11004
+          - https://api-learn-lacinia.mkdirp.com
+paths:
+             
+  /api/rest/customers:
+    get:
+      tags:
+        - Customers
+      summary: Retrieve customer list
+      description: |
+        Retrieves a paginated list of customers.
+      parameters:
+      - name: offset
+        in: query
+        description: The position of the data to retrieve
+        required: true
+        schema:
+          type: string
+          example: 0
+          nullable: false
+      - name: limit
+        in: query
+        description: The maximum number of data to retrieve
+        required: true
+        schema:
+          type: string
+          example: 10
+          nullable: false
+      responses:
+        '200':
+          description: Successful retrieval
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    active:
+                      type: bool
+                      example: true
+                    address_id:
+                      type: integer
+                      example: 1
+                    create_date:
+                      type: string
+                      example: 2006-02-14T22:04:36
+                    customer_id:
+                      type: integer
+                      example: 1
+                    email:
+                      type: string
+                      example: me@example.com
+                    first_name:
+                      type: string
+                      example: JOHN
+                    last_name:
+                      type: string
+                      example: DOE
+                    last_update:
+                      type: string
+                      example: 2006-02-14T22:04:36
+                    store_id:
+                      type: integer
+                      example: 1
+
+                required:
+                  - active
+                  - address_id
+                  - create_date
+                  - customer_id
+                  - email
+                  - first_name
+                  - last_name
+                  - last_update
+                  - store_id
+        '400':
+          $ref: '#/components/responses/400Error'
+
+  /api/rest/customers/count:
+    get:
+      tags:
+        - Customers
+      summary: Retrieve customer count
+      description: |
+        Retrieves the total number of customers.
+      responses:
+        '200':
+          description: Successful retrieval
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 1000
+
+                required:
+                  - total
+        '400':
+          $ref: '#/components/responses/400Error'
+
+  /api/rest/customer/{id}/address:
+    get:
+      parameters:
+        - in: path
+          name: id
+          description: Customer ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      tags:
+        - Customer
+      summary: Retrieve customer information
+      description: |
+        Retrieves information for a specific customer.
+      responses:
+        '200':
+          description: Successful retrieval
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  active:
+                    type: bool
+                    example: true
+                  address:
+                    type: object
+                    properties:
+                      address:
+                        type: string
+                        example: 1913 Hanoi Way
+                      address2:
+                        type: string
+                        example: 40 street 129
+                      address_id:
+                        type: integer
+                        example: 1
+                      city:
+                        type: object
+                        properties:
+                          city:
+                            type: string
+                            example: "New York"
+                          city_id:
+                            type: integer
+                            example: 3
+                          country:
+                            type: object
+                            properties:
+                              country:
+                                type: string
+                                example: "France"
+                              country_id:
+                                type: integer
+                                example: 3
+                              last_update:
+                                type: string
+                                example: 2006-02-14T22:04:36
+                          country_id:
+                            type: integer
+                            example: 1
+                          last_update:
+                            type: string
+                            example: 2006-02-14T22:04:36
+                      city_id:
+                        type: integer
+                        example: 5
+                      district:
+                        type: string
+                        example: Nagasaki
+                      last_update:
+                        type: string
+                        example: 2006-02-14T22:04:36
+                      location:
+                        type: string
+                        example: AAAAAAEBAAAAKNE3DiE3YECrtYvEX5RAQA==
+                      phone:
+                        type: string
+                        example: '332222244'
+                      postal_code:
+                        type: string
+                        example: '10442'
+                  address_id:
+                    type: integer
+                    example: 1
+                  create_date:
+                    type: integer
+                    example: 2006-02-14T22:04:36
+                  customer_id:
+                    type: integer
+                    example: 3
+                  email:
+                    type: string
+                    example: me@the.zoo
+                  first_name:
+                    type: string
+                    example: JOHN
+                  last_name:
+                    type: string
+                    example: DOE
+                  last_update:
+                    type: string
+                    example: 2006-02-14T22:04:36
+                  store_id:
+                    type: integer
+                    example: 5
+                required:
+                  - active
+                  - address
+                  - address_id
+                  - create_date
+                  - customer_id
+                  - email
+                  - first_name
+                  - last_name
+                  - last_update
+                  - store_id
+        '400':
+          $ref: '#/components/responses/400Error'
+        '404':
+          $ref: '#/components/responses/404Error'
+
+  /api/rest/customer/{id}/rental:
+    get:
+      parameters:
+        - in: path
+          name: id
+          description: Customer ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      tags:
+        - Customer
+      summary: Retrieve customer rental information
+      description: |
+        Retrieves rental information for a specific customer.
+      responses:
+        '200':
+          description: Successful retrieval
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  active:
+                    type: bool
+                    example: true
+                  address_id:
+                    type: integer
+                    example: 1
+                  create_date:
+                    type: integer
+                    example: 2006-02-14T22:04:36
+                  customer_id:
+                    type: integer
+                    example: 3
+                  email:
+                    type: string
+                    example: me@the.zoo
+                  first_name:
+                    type: string
+                    example: JOHN
+                  last_name:
+                    type: string
+                    example: DOE
+                  last_update:
+                    type: string
+                    example: 2006-02-14T22:04:36
+                  payment:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        amount:
+                          type: integer
+                          example: 2.97
+                        customer_id:
+                          type: integer
+                          example: 3
+                        last_update:
+                          type: string
+                          example: 2006-02-14T22:04:36
+                        payment_date:
+                          type: string
+                          example: 2006-02-14T22:04:36
+                        payment_id:
+                          type: integer
+                          example: 3
+                        rental:
+                          type: object
+                          properties:
+                            customer_id: 
+                              type: integer
+                              example: 1
+                            inventory:
+                              type: object
+                              properties:
+                                film_id:
+                                  type: integer
+                                  example: 1
+                                inventory_id:
+                                  type: integer
+                                  example: 544
+                                last_update:
+                                  type: string
+                                  example: 2006-02-14T22:04:36
+                                store_id:
+                                  type: integer
+                                  example: 1
+                            inventory_id:
+                              type: integer
+                              example: 544
+                            last_update:
+                              type: string
+                              example: 2006-02-14T22:04:36
+                            rental_date:
+                              type: string
+                              example: 2006-02-14T22:04:36
+                            rental_id: 
+                              type: integer
+                              example: 1
+                            return_date:
+                              type: string
+                              example: 2006-02-14T22:04:36
+                            staff_id: 
+                              type: integer
+                              example: 1
+                        rental_id: 
+                          type: integer
+                          example: 1
+                        staff_id: 
+                          type: integer
+                          example: 1
+                required:
+                  - active
+                  - address
+                  - create_date
+                  - customer_id
+                  - email
+                  - first_name
+                  - last_update
+                  - payment
+        '400':
+          $ref: '#/components/responses/400Error'
+        '404':
+          $ref: '#/components/responses/404Error'
+  /api/rest/film/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          description: Film ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      tags:
+        - Film
+      summary: Get Film Information
+      description: |
+        Retrieve information about a specific film
+      responses:
+        '200':
+          description: Retrieval successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  description:
+                    type: string
+                    example: "A Fast-Paced Documentary of a Pastry Chef"
+                  film_actor:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        actor:
+                          type: object
+                          properties:
+                            actor_id:
+                              type: integer
+                              example: 2
+                            first_name:
+                              type: string
+                              example: JOHN
+                            last_name:
+                              type: string
+                              example: DOE
+                  film_category:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        category:
+                          type: object
+                          properties:
+                            category_id:
+                              type: integer
+                              example: 2
+                            name:
+                              type: string
+                              example: Family
+                  film_id:
+                    type: integer
+                    example: 1
+                  language_id:
+                    type: integer
+                    example: 3
+                  last_update:
+                    type: string
+                    example: 2006-02-14T22:04:36
+                  length:
+                    type: integer
+                    example: 120
+                  original_language_id:
+                    type: integer
+                    nullable: true
+                    example: 1
+                  rating:
+                    type: string
+                    example: G
+                  release_year:
+                    type: string
+                    example: 2006-02-14T22:04:36
+                  rental_duration:
+                    type: integer
+                    example: 4
+                  rental_rate:
+                    type: integer
+                    example: 3.21
+                  replacement_cost:
+                    type: integer
+                    example: 42.99
+                  special_features:
+                    type: string
+                    example: Deleted Scenes
+                  title:
+                    type: string
+                    example: AFRICAN EGG
+                required:
+                  - description
+                  - film_actor
+                  - film_category
+                  - film_id
+                  - language_id
+                  - last_update
+                  - length
+                  - original_language_id
+                  - rating
+                  - release_year
+                  - rental_duration
+                  - rental_rate
+                  - replacement_cost
+                  - special_features
+                  - title
+        '400':
+          $ref: '#/components/responses/400Error'
+        '404':
+          $ref: '#/components/responses/404Error'
+
+  /health:
+    get:
+      tags:
+        - Health check
+      summary: Health Check
+      description: |
+        Sends a health check to the running server and returns a fixed string.
+      responses:
+        '200':
+          description: Health check successful
+          content:
+            text/html:
+              schema:
+                type: string
+                example: Application is running
+  /api/health:
+    get:
+      tags:
+        - Health check
+      summary: Health Check
+      description: |
+        Sends a health check to the running server and returns a fixed string.
+      responses:
+        '200':
+          description: Health check successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Application is running
+
+components:
+  responses:
+    400Error:
+      description: |
+        Invalid request format
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Bad request"
+    404Error:
+      description: |
+        The specified resource does not exist
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Not found"
+
