@@ -5,6 +5,6 @@
            :overrides {"org.eclipse.jetty" :info}}
 
  :server {:opts {:host "localhost"
-                 :port #long #profile {:default 5000
-                                       :dev 8000}
+                 :port #long #profile {:default 11014
+                                       :dev 11004}
                  :join? false}}}
