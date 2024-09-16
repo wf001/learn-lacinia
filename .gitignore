@@ -1,6 +1,6 @@
-.lsp
-.cpcache
-.nrepl-port
-.clj-kondo/.cache
+**/.lsp
+**/.cpcache
+**/.nrepl-port
+**/.clj-kondo/.cache
 target
 classes
