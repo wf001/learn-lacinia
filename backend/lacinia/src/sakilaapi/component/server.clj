@@ -1,4 +1,4 @@
-(ns cljapi.component.server
+(ns sakilaapi.component.server
   (:require
    [com.stuartsierra.component :as component]
    [ring.adapter.jetty9 :as jetty]))

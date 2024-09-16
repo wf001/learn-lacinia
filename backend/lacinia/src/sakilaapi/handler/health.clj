@@ -1,7 +1,7 @@
-(ns cljapi.handler.health
+(ns sakilaapi.handler.health
   (:require
-   [cljapi.handler :as h]
-   [cljapi.router :as r]
+   [sakilaapi.handler :as h]
+   [sakilaapi.router :as r]
    [ring.util.http-response :as res]))
 
 (defmethod h/handler [::r/health :get]

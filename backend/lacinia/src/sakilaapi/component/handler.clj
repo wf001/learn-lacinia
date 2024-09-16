@@ -1,8 +1,8 @@
-(ns cljapi.component.handler
+(ns sakilaapi.component.handler
   (:require
-   [cljapi.handler.api.greeting]
-   [cljapi.handler.health]
-   [cljapi.router :as router]
+   [sakilaapi.handler.api.greeting]
+   [sakilaapi.handler.health]
+   [sakilaapi.router :as router]
    [com.stuartsierra.component :as component]
    [reitit.ring :as ring]
    [ring.logger :as m.logger]

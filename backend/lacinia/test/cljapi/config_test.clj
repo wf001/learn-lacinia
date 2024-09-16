@@ -1,6 +1,6 @@
-(ns cljapi.config-test
+(ns sakilaapi.config-test
   (:require
-   [cljapi.config :as sut]
+   [sakilaapi.config :as sut]
    [clojure.test :refer [deftest testing is]]))
 
 (deftest read-config-test

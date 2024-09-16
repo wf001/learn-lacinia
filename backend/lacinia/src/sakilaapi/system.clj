@@ -1,8 +1,8 @@
-(ns cljapi.system
+(ns sakilaapi.system
   (:require
-   [cljapi.component.handler :as c.handler]
-   [cljapi.component.server :as c.server]
-   [cljapi.config :as config]
+   [sakilaapi.component.handler :as c.handler]
+   [sakilaapi.component.server :as c.server]
+   [sakilaapi.config :as config]
    [clojure.tools.logging :as log]
    [com.stuartsierra.component :as component]
    [unilog.config :as unilog]))

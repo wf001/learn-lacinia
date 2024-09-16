@@ -1,7 +1,7 @@
-(ns cljapi.router
+(ns sakilaapi.router
   (:require
    [camel-snake-kebab.core :as csk]
-   [cljapi.handler :as h]
+   [sakilaapi.handler :as h]
    [clojure.core.memoize :as memo]
    [muuntaja.core :as muu]
    [muuntaja.middleware :as muu.middleware]

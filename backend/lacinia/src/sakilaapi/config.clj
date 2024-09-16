@@ -1,4 +1,4 @@
-(ns cljapi.config
+(ns sakilaapi.config
   (:require
    [aero.core :as aero]
    [clojure.java.io :as io]))

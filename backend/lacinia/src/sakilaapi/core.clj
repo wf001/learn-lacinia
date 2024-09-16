@@ -1,7 +1,7 @@
-(ns cljapi.core
+(ns sakilaapi.core
   (:gen-class)
   (:require
-   [cljapi.system :as system]))
+   [sakilaapi.system :as system]))
 
 (defn -main
   [& _args]

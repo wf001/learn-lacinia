@@ -4,7 +4,7 @@
 
 (def class-dir "target/classes")
 (def basis (b/create-basis {:project "deps.edn"}))
-(def uber-file "target/cljapi.jar")
+(def uber-file "target/sakilaapi.jar")
 
 (defn uber [_]
   (b/copy-dir {:src-dirs ["src" "resources"]
@@ -15,4 +15,4 @@
   (b/uber {:class-dir class-dir
            :uber-file uber-file
            :basis basis
-           :main 'cljapi.core}))
+           :main 'sakilaapi.core}))

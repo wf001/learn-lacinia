@@ -1,6 +1,6 @@
 (ns user
   (:require
-   [cljapi.system :as system]))
+   [sakilaapi.system :as system]))
 
 (defonce system (atom nil))
 

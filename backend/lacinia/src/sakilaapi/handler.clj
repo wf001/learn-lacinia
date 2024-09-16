@@ -1,4 +1,4 @@
-(ns cljapi.handler
+(ns sakilaapi.handler
   (:require
    [ring.util.http-response :as res]))
 

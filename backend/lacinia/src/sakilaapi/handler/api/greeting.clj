@@ -1,12 +1,12 @@
-(ns cljapi.handler.api.greeting
+(ns sakilaapi.handler.api.greeting
   (:require
-   [cljapi.handler :as h]
-   [cljapi.router :as r]
+   [sakilaapi.handler :as h]
+   [sakilaapi.router :as r]
    [ring.util.http-response :as res]))
 
 (defmethod h/handler [::r/hello :get]
   [_]
-  (res/ok {:greeting "Hello cljapi!!"}))
+  (res/ok {:greeting "Hello sakilaapi!!"}))
 
 (defmethod h/handler [::r/goodbye :get]
   [_]
