@@ -36,10 +36,3 @@
     ["/api" {:middleware [[rg.mw.defautls/wrap-defaults ring-custom-config]
                           [muu.mw/wrap-format muuntaja-custom-config]
                           muu.mw/wrap-params]}]]))
-
-(comment
-  (require '[reitit.core :as r])
-
-  (r/routes router)
-  (r/match-by-path router "/health")
-  (r/match-by-path router "/api/hello"))
