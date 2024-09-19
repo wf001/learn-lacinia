@@ -1,0 +1,5 @@
+{:deps
+ {org.clj-commons/clj-http-lite {:mvn/version "1.0.13"}
+  cheshire/cheshire {:mvn/version "5.10.0"}}}
+
+
