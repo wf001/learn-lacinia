@@ -7,3 +7,8 @@
 (defmethod handler/handler [::router/health :get]
   [_]
   (rg.u.http-res/ok "Application is runnig"))
+
+
+(defmethod handler/handler [::router/health-json :get]
+  [_]
+  (rg.u.http-res/ok {:message  "Application is runnig"}))

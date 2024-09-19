@@ -33,6 +33,9 @@
   (rt.ring/router
    [["/health" {:name ::health
                 :handler handler/handler}]
-    ["/api" {:middleware [[rg.mw.defautls/wrap-defaults ring-custom-config]
-                          [muu.mw/wrap-format muuntaja-custom-config]
-                          muu.mw/wrap-params]}]]))
+    ["/api"
+     ["/" {:middleware [[rg.mw.defautls/wrap-defaults ring-custom-config]
+                        [muu.mw/wrap-format muuntaja-custom-config]
+                        muu.mw/wrap-params]}
+      ["health" {:name ::health-json
+                 :handler handler/handler}]]]]))
