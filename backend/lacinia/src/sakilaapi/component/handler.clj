@@ -6,7 +6,6 @@
    [ring.middleware.lint :as rg.mw.lint]
    [ring.middleware.reload :as rg.mw.reload]
    [ring.middleware.stacktrace :as rg.mw.stacktrace]
-   [sakilaapi.handler.api.greeting]
    [sakilaapi.handler.health]
    [sakilaapi.router :as router]))
 

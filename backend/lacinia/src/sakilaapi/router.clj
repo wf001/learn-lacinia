@@ -35,11 +35,7 @@
                 :handler handler/handler}]
     ["/api" {:middleware [[rg.mw.defautls/wrap-defaults ring-custom-config]
                           [muu.mw/wrap-format muuntaja-custom-config]
-                          muu.mw/wrap-params]}
-     ["/hello" {:name ::hello
-                :handler handler/handler}]
-     ["/goodbye" {:name ::goodbye
-                  :handler handler/handler}]]]))
+                          muu.mw/wrap-params]}]]))
 
 (comment
   (require '[reitit.core :as r])
