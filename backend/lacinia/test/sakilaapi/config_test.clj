@@ -1,7 +1,7 @@
 (ns sakilaapi.config-test
   (:require
-   [sakilaapi.config :as sut]
-   [clojure.test :refer [deftest testing is]]))
+   [clojure.test :refer [deftest testing is]]
+   [sakilaapi.config :as sut]))
 
 (deftest read-config-test
   (testing "usable profiles"
