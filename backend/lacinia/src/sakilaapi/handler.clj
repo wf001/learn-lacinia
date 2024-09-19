@@ -1,6 +1,6 @@
 (ns sakilaapi.handler
   (:require
-   [ring.util.http-response :as res]))
+   [ring.util.http-response :as rg.u.http-res]))
 
 (defmulti handler
   "引数はリクエストマップ
@@ -15,4 +15,4 @@
 
 (defmethod handler :default
   [_]
-  (res/not-found "not found"))
+  (rg.u.http-res/not-found "not found"))

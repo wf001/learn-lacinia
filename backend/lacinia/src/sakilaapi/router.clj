@@ -1,15 +1,15 @@
 (ns sakilaapi.router
   (:require
-   [camel-snake-kebab.core :as csk]
-   [sakilaapi.handler :as h]
-   [clojure.core.memoize :as memo]
-   [muuntaja.core :as muu]
-   [muuntaja.middleware :as muu.middleware]
-   [reitit.ring :as ring]
-   [ring.middleware.defaults :as m.defautls]))
+   [camel-snake-kebab.core :as csk.core]
+   [clojure.core.memoize :as clj.memo]
+   [muuntaja.core :as muu.core]
+   [muuntaja.middleware :as muu.mw]
+   [reitit.ring :as rt.ring]
+   [ring.middleware.defaults :as rg.mw.defautls]
+   [sakilaapi.handler :as handler]))
 
-(def ^:private ring-defaults-config
-  (-> m.defautls/api-defaults
+(def ^:private ring-custom-config
+  (-> rg.mw.defautls/api-defaults
       ;; ロードバランサーの後ろで動いていると想定して、
       ;; X-Forwarded-For と X-Forwarded-Proto に対応させる
       (assoc :proxy true)))
@@ -17,29 +17,29 @@
 (def ^:private memoized->camelCaseString
   "実装上kebab-case keywordでやっているものをJSONにするときにcamelCaseにしたい。
    バリエーションはそれほどないはずなのでキャッシュする"
-  (memo/lru csk/->camelCaseString {} :lru/threshold 1024))
+  (clj.memo/lru csk.core/->camelCaseString {} :lru/threshold 1024))
 
-(def ^:private muuntaja-config
+(def ^:private muuntaja-custom-config
   "https://cljdoc.org/d/metosin/muuntaja/0.6.8/doc/configuration"
-  (-> muu/default-options
+  (-> muu.core/default-options
       ;; JSONにencodeする時にキーをcamelCaseにする
       (assoc-in [:formats "application/json" :encoder-opts]
                 {:encode-key-fn memoized->camelCaseString})
       ;; JSON以外のacceptでリクエストされたときに返らないように制限する
       (update :formats #(select-keys % ["application/json"]))
-      muu/create))
+      muu.core/create))
 
 (def router
-  (ring/router
+  (rt.ring/router
    [["/health" {:name ::health
-                :handler h/handler}]
-    ["/api" {:middleware [[m.defautls/wrap-defaults ring-defaults-config]
-                          [muu.middleware/wrap-format muuntaja-config]
-                          muu.middleware/wrap-params]}
+                :handler handler/handler}]
+    ["/api" {:middleware [[rg.mw.defautls/wrap-defaults ring-custom-config]
+                          [muu.mw/wrap-format muuntaja-custom-config]
+                          muu.mw/wrap-params]}
      ["/hello" {:name ::hello
-                :handler h/handler}]
+                :handler handler/handler}]
      ["/goodbye" {:name ::goodbye
-                  :handler h/handler}]]]))
+                  :handler handler/handler}]]]))
 
 (comment
   (require '[reitit.core :as r])

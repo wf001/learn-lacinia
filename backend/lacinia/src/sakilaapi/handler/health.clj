@@ -1,9 +1,9 @@
 (ns sakilaapi.handler.health
   (:require
-   [sakilaapi.handler :as h]
-   [sakilaapi.router :as r]
-   [ring.util.http-response :as res]))
+   [ring.util.http-response :as rg.u.http-res]
+   [sakilaapi.handler :as handler]
+   [sakilaapi.router :as router]))
 
-(defmethod h/handler [::r/health :get]
+(defmethod handler/handler [::router/health :get]
   [_]
-  (res/ok "Application is runnig"))
+  (rg.u.http-res/ok "Application is runnig"))

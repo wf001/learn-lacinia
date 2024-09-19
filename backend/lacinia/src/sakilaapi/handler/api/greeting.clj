@@ -1,13 +1,13 @@
 (ns sakilaapi.handler.api.greeting
   (:require
-   [sakilaapi.handler :as h]
-   [sakilaapi.router :as r]
-   [ring.util.http-response :as res]))
+   [ring.util.http-response :as rg.u.http-res]
+   [sakilaapi.handler :as handler]
+   [sakilaapi.router :as router]))
 
-(defmethod h/handler [::r/hello :get]
+(defmethod handler/handler [::router/hello :get]
   [_]
-  (res/ok {:greeting "Hello sakilaapi!!"}))
+  (rg.u.http-res/ok {:greeting "Hello sakilaapi!!"}))
 
-(defmethod h/handler [::r/goodbye :get]
+(defmethod handler/handler [::router/goodbye :get]
   [_]
-  (res/ok {:greeting "Goodbye!"}))
+  (rg.u.http-res/ok {:greeting "Goodbye!"}))
