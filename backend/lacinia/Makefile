@@ -9,14 +9,19 @@ lint:
 .PHONY: static-check
 static-check: format lint
 
-.PHONY: clean
-clean:
-	rm -fr target/
-
 .PHONY: test
 test:
 	bin/kaocha --fail-fast
 
+
+.PHONY: clean
+clean:
+	rm -fr target/
+
 .PHONY: build
 build: clean
 	clojure -T:build uber
+
+start-clj:
+	make build
+	java -jar target/sakilaapi.jar
