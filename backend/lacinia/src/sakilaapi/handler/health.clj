@@ -1,8 +1,9 @@
 (ns sakilaapi.handler.health
   (:require
-   [ring.util.http-response :as rg.u.http-res]
-   [sakilaapi.handler :as handler]
-   [sakilaapi.router :as router]))
+    [ring.util.http-response :as rg.u.http-res]
+    [sakilaapi.handler :as handler]
+    [sakilaapi.router :as router]))
+
 
 (defmethod handler/handler [::router/health :get]
   [_]

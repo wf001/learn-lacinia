@@ -1,6 +1,7 @@
 (ns sakilaapi.handler
   (:require
-   [ring.util.http-response :as rg.u.http-res]))
+    [ring.util.http-response :as rg.u.http-res]))
+
 
 (defmulti handler
   "引数はリクエストマップ
@@ -12,6 +13,7 @@
   (fn [req]
     [(get-in req [:reitit.core/match :data :name])
      (get req :request-method)]))
+
 
 (defmethod handler :default
   [_]

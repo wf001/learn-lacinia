@@ -1,16 +1,23 @@
 (ns user
   (:require
-   [sakilaapi.system :as system]))
+    [sakilaapi.system :as system]))
+
 
 (defonce system (atom nil))
 
-(defn start []
+
+(defn start
+  []
   (reset! system (system/start :dev)))
 
-(defn stop []
+
+(defn stop
+  []
   (when @system
     (reset! system (system/stop @system))))
 
-(defn go []
+
+(defn go
+  []
   (stop)
   (start))
