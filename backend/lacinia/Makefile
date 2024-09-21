@@ -4,7 +4,7 @@ format:
 
 .PHONY: lint
 lint:
-	clj-kondo --lint src
+	clj-kondo --fail-level error --lint src
 
 .PHONY: static-check
 static-check: format lint
