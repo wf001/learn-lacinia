@@ -1,6 +1,7 @@
 (ns sakilaapi.handler
   (:require
-    [ring.util.http-response :as rg.u.http-res]))
+    [clojure.tools.logging :as clj.log]
+    [sakilaapi.util.http :as u.http]))
 
 
 (defmulti handler
@@ -17,4 +18,7 @@
 
 (defmethod handler :default
   [_]
-  (rg.u.http-res/not-found "not found"))
+  "存在しないhandlerが呼び出された場合に呼び出される
+   存在しないルーティングに対しては、ring-handlerの第2引数の内容が返される"
+  (clj.log/error "The specified handler not implemented.")
+  (u.http/internal-server-error))
