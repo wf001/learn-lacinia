@@ -1,1 +1,10 @@
-{:skip-comments true}
+{
+ :skip-comments true
+ :linters {
+           :inline-def {:level :error}
+           :line-length {:max-line-length 80}
+           :redundant-call {:level :warning}
+           :equals-true {:level :warning}
+           :equals-false {:level :warning}
+ }
+}

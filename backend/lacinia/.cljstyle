@@ -1,14 +1,30 @@
-{:rules {:indentation {:list-indent 1
-                       :indents {defrecord [[:inner 0] [:inner 1]]}}
-         :whitespace {:remove-surrounding? true
+{:files {:extensions #{"clj" "cljs" "cljc" "cljx"}
+         :ignore #{".git" ".hg" ".clj-kondo"}}
+ :rules {:indentation {:enabled? true
+                       :list-indent 2
+                       :indents {}}
+         :whitespace {:enabled? true
+                      :remove-surrounding? true
                       :remove-trailing? true
                       :insert-missing? true}
-         :blank-lines {:trim-consecutive? true
+         :blank-lines {:enabled? true
+                       :trim-consecutive? true
+                       :max-consecutive 2
                        :insert-padding? true
-                       :padding-lines 1}
+                       :padding-lines 2}
          :eof-newline {:enabled? true}
-         :comments {:enabled? false}
-         :vars {:enabled? false}
-         :functions {:enabled? false}
-         :types {:enabled? false}
-         :namespaces {:indent-size 1}}}
+         :comments {:enabled? true
+                    :inline-prefix " "
+                    :leading-prefix "; "}
+         :vars {:enabled? true}
+         :functions {:enabled? true}
+         :types {:enabled? true
+                 :types? true
+                 :protocols? true
+                 :reifies? true
+                 :proxies? true}
+         :namespaces {:enabled? true
+                      :indent-size 2
+                      :break-libs? true
+                      :import-break-width 60}}}
+
