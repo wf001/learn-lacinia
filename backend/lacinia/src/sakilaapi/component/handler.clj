@@ -26,7 +26,7 @@
                       (apply conj dev-middlewares common-middlewares))]
     (rt.ring/ring-handler
       router/router
-      nil
+      (rt.ring/create-default-handler)
       {:middleware middlewares})))
 
 
