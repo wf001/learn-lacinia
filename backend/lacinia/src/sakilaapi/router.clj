@@ -6,7 +6,8 @@
     [muuntaja.middleware :as muu.mw]
     [reitit.ring :as rt.ring]
     [ring.middleware.defaults :as rg.mw.defautls]
-    [sakilaapi.handler :as handler]))
+    [sakilaapi.handler :as handler]
+    [sakilaapi.middleware.db :as mw.db]))
 
 
 (def ^:private ring-custom-config
@@ -24,13 +25,18 @@
       muu.core/create))
 
 
-(def router
+(defn router
+  [db]
   (rt.ring/router
     [["/health" {:name ::health
                  :handler handler/handler}]
      ["/api"
       ["/" {:middleware [[rg.mw.defautls/wrap-defaults ring-custom-config]
                          [muu.mw/wrap-format muuntaja-custom-config]
-                         muu.mw/wrap-params]}
+                         muu.mw/wrap-params
+                         [mw.db/wrap-db-conn db]]}
        ["health" {:name ::health-json
-                  :handler handler/handler}]]]]))
+                  :handler handler/handler}]
+       ["rest/"
+        ["customers" {:name ::list-customers
+                      :handler handler/handler}]]]]]))

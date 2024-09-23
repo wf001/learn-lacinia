@@ -6,6 +6,7 @@
     [ring.middleware.lint :as rg.mw.lint]
     [ring.middleware.reload :as rg.mw.reload]
     [ring.middleware.stacktrace :as rg.mw.stacktrace]
+    [sakilaapi.handler.customer]
     [sakilaapi.handler.health]
     [sakilaapi.router :as router]))
 
@@ -19,25 +20,25 @@
 
 
 (defn- build-handler
-  [profile]
+  [profile db]
   (let [common-middlewares [rg.logger/wrap-with-logger]
         middlewares (if (= profile :prod)
                       common-middlewares
                       (apply conj dev-middlewares common-middlewares))]
     (rt.ring/ring-handler
-      router/router
+      (router/router db)
       (rt.ring/create-default-handler)
       {:middleware middlewares})))
 
 
 (defrecord Handler
-  [handler profile]
+  [handler profile db]
 
   st.component/Lifecycle
 
   (start
     [this]
-    (assoc this :handler (build-handler profile)))
+    (assoc this :handler (build-handler profile db)))
 
 
   (stop

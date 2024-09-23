@@ -2,6 +2,7 @@
   (:require
     [clojure.tools.logging :as clj.log]
     [com.stuartsierra.component :as st.component]
+    [sakilaapi.component.db :as c.db]
     [sakilaapi.component.handler :as c.handler]
     [sakilaapi.component.server :as c.server]
     [sakilaapi.config :as config]
@@ -11,7 +12,10 @@
 (defn- new-system
   [{:as config :keys [:profile]}]
   (st.component/system-map
-    :handler (c.handler/map->Handler {:profile profile})
+    :db (c.db/map->Database (:db config))
+    :handler (st.component/using
+               (c.handler/map->Handler {:profile profile})
+               [:db])
     :server (st.component/using
               (c.server/map->Jetty9Server (:server config))
               [:handler])))
