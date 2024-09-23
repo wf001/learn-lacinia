@@ -14,7 +14,7 @@
 (defn endpoint-url-map
   [name]
   ({:ring-dev "http://localhost:11004"
-    :ring-jar "http://localhost:11014"} name))
+    :ring-jar "http://localhost:11015"} name))
 
 
 (defn- failed-color
@@ -132,7 +132,13 @@
                   (->> "/api/not-found"
                        (str url)
                        rest-request-get)
-                  {:status 404}))
+                  {:status 404})
+  (assert-request "/api/rest/customers"
+                  (->> "/api/rest/customers"
+                       (str url)
+                       rest-request-get)
+                  {:status 200 [0 :email] "MARY.SMITH@sakilacustomer.org"}
+                  true))
 
 
 (defn- main
