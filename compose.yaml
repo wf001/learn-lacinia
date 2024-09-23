@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  nginx:
+    build: 
+       context: .
+       dockerfile: infrastructure/docker/local/nginx/Dockerfile
+    ports:
+      - "11015:80"
+    depends_on:
+      - lacinia
+    container_name: sakila-nginx
+
+  lacinia:
+    build: 
+       context: .
+       dockerfile: infrastructure/docker/local/lacinia/Dockerfile
+    ports:
+      - "11014:11014"
+    depends_on:
+      - db
+    restart: always
+    container_name: sakila-clj-api
+
+  db:
+    build: 
+       context: .
+       dockerfile: infrastructure/docker/local/db/Dockerfile
+    container_name: sakila-db
+    ports:
+      - "11002:3306"
+
+
