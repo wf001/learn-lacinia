@@ -1,5 +1,6 @@
 (ns user
   (:require
+    [sakilaapi.config :as conf]
     [sakilaapi.system :as system]))
 
 
@@ -21,3 +22,9 @@
   []
   (stop)
   (start))
+
+
+(defn conf
+  [kw]
+  (-> (conf/read-config :dev)
+      kw))

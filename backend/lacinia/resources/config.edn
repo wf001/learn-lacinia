@@ -3,8 +3,15 @@
            :console #profile {:prod {:encoder :json}
                               :default true}
            :overrides {"org.eclipse.jetty" :info}}
-
- :server {:opts {:host "localhost"
+ :db {:dbtype "mysql" 
+     :dbname "sakila" 
+     :host #profile {:dev "127.0.0.1"
+                     :prod "sakila-db"} 
+     :port #profile {:dev 11002 
+                     :prod 3306} 
+     :user "learn-lacinia" 
+     :password "password"}
+ :server {:opts {:host "0.0.0.0"
                  :port #long #profile {:default 11014
                                        :dev 11004}
                  :join? false}}}
