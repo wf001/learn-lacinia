@@ -1,3 +1,4 @@
+include .env
 ##################
 # Setting
 ##################
@@ -11,6 +12,15 @@ check-deps:
 
 
 ##################
+# Development
+##################
+serve-db:
+	docker compose up db
+
+
+
+
+##################
 # NOTICE: The command below this is a development-only command and is not intended for general use.
 ##################
 
@@ -21,6 +31,18 @@ check-deps:
 api-test:
 	bb ./backend/tests/main.clj
 
+###################
+## Deployment
+###################
+commit-all:
+	docker commit sakila-nginx ${IMAGE_REPO_ENDPOINT}/${IMAGE_REPO_PREFIX}/${IMAGE_REPO_NGINX}:${IMAGE_TAG}
+	docker commit sakila-clj-api ${IMAGE_REPO_ENDPOINT}/${IMAGE_REPO_PREFIX}/${IMAGE_REPO_CLJ_API}:${IMAGE_TAG}
+	docker commit sakila-db ${IMAGE_REPO_ENDPOINT}/${IMAGE_REPO_PREFIX}/${IMAGE_REPO_DB}:${IMAGE_TAG}
+
+push-all:
+	docker push ${IMAGE_REPO_ENDPOINT}/${IMAGE_REPO_PREFIX}/${IMAGE_REPO_NGINX}:${IMAGE_TAG}
+	docker push ${IMAGE_REPO_ENDPOINT}/${IMAGE_REPO_PREFIX}/${IMAGE_REPO_CLJ_API}:${IMAGE_TAG}
+	docker push ${IMAGE_REPO_ENDPOINT}/${IMAGE_REPO_PREFIX}/${IMAGE_REPO_DB}:${IMAGE_TAG}
 
 ###################
 ## Document
