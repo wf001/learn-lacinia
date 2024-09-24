@@ -6,6 +6,7 @@
     [sakilaapi.component.handler :as c.handler]
     [sakilaapi.component.server :as c.server]
     [sakilaapi.config :as config]
+    [schema.core :as s]
     [unilog.config :as unilog.cnf]))
 
 
@@ -34,6 +35,7 @@
         _ (clj.log/info "system is ready to start")
         started-system (st.component/start system)]
     (clj.log/info "system is started")
+    (s/set-fn-validation! true)
     started-system))
 
 
