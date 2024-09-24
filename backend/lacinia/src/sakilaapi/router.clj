@@ -7,7 +7,8 @@
     [reitit.ring :as rt.ring]
     [ring.middleware.defaults :as rg.mw.defautls]
     [sakilaapi.handler :as handler]
-    [sakilaapi.middleware.db :as mw.db]))
+    [sakilaapi.middleware.db :as mw.db]
+    [sakilaapi.middleware.exception :as mw.exception]))
 
 
 (def ^:private ring-custom-config
@@ -33,6 +34,7 @@
      ["/api"
       ["/" {:middleware [[rg.mw.defautls/wrap-defaults ring-custom-config]
                          [muu.mw/wrap-format muuntaja-custom-config]
+                         mw.exception/wrap-unexpected-exception
                          muu.mw/wrap-params
                          [mw.db/wrap-db-conn db]]}
        ["health" {:name ::health-json
