@@ -29,3 +29,13 @@
   (->> (-> (hsql.h/select :*)
            (hsql.h/from :customer))
        (u.db/execute-all db)))
+
+
+(s/defn find-by-id
+  :- (s/maybe Customer)
+  [db :- sakila.schm/DBProfile
+   customer-id :- s/Int]
+  (->> (-> (hsql.h/select :*)
+           (hsql.h/from :customer)
+           (hsql.h/where [:= :customer_id customer-id]))
+       (u.db/execute-one db)))
