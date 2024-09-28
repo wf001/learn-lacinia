@@ -41,4 +41,10 @@
                   :handler handler/handler}]
        ["rest/"
         ["customers" {:name ::list-customers
-                      :handler handler/handler}]]]]]))
+                      :handler handler/handler}]
+        ["customer/:id/address" {:name ::get-address-by-customer
+                                 :handler handler/handler}]
+        ["customer/:id/rental" {:name ::get-rental-info-by-customer
+                                :handler handler/handler}]
+        ["film/:id" {:name ::get-film
+                     :handler handler/handler}]]]]]))

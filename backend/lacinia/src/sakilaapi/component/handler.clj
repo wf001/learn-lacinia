@@ -7,6 +7,7 @@
     [ring.middleware.reload :as rg.mw.reload]
     [ring.middleware.stacktrace :as rg.mw.stacktrace]
     [sakilaapi.handler.customer]
+    [sakilaapi.handler.film]
     [sakilaapi.handler.health]
     [sakilaapi.router :as router]))
 

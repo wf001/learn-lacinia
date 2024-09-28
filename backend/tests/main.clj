@@ -116,6 +116,11 @@
   (fn [] (clj-http.client/get endpoint {:as :json :throw-exceptions false})))
 
 
+(defn- rest-request-post
+  [endpoint]
+  (fn [] (clj-http.client/post endpoint {:as :json :throw-exceptions false})))
+
+
 (defn- test-rest
   [url]
   (println)
@@ -128,17 +133,53 @@
                        rest-request-get)
                   {:status 200 [:message] "Application is runnig"})
 
-  (assert-request "/api/not-found"
-                  (->> "/api/not-found"
-                       (str url)
-                       rest-request-get)
-                  {:status 404})
   (assert-request "/api/rest/customers"
                   (->> "/api/rest/customers"
                        (str url)
                        rest-request-get)
                   {:status 200 [0 :email] "MARY.SMITH@sakilacustomer.org"}
-                  true))
+                  true)
+
+  (assert-request "/api/rest/customer/1/address"
+                  (->> "/api/rest/customer/1/address"
+                       (str url)
+                       rest-request-get)
+                  {:status 200 [:email] "MARY.SMITH@sakilacustomer.org"})
+
+  (assert-request "/api/rest/customer/1/rental"
+                  (->> "/api/rest/customer/1/rental"
+                       (str url)
+                       rest-request-get)
+                  {:status 200 [:email] "MARY.SMITH@sakilacustomer.org"})
+
+  (assert-request "/api/rest/film/1"
+                  (->> "/api/rest/film/1"
+                       (str url)
+                       rest-request-get)
+                  {:status 200 [:title] "ACADEMY DINOSAUR"})
+
+  ;; 例外系
+  (assert-request "/api/not-found"
+                  (->> "/api/not-found"
+                       (str url)
+                       rest-request-get)
+                  {:status 404})
+  (assert-request "Get no-existing user for address"
+                  (->> "/api/rest/customer/a/address"
+                       (str url)
+                       rest-request-get)
+                  {:status 404 [:message] "Not found"})
+
+  (assert-request "Get no-existing user for rental"
+                  (->> "/api/rest/customer/a/rental"
+                       (str url)
+                       rest-request-get)
+                  {:status 404 [:message] "Not found"})
+  (assert-request "Not allowed method"
+                  (->> "/api/rest/film/1"
+                       (str url)
+                       rest-request-post)
+                  {:status 500 [:message] "Internal server error"}))
 
 
 (defn- main
