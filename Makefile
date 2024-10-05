@@ -10,6 +10,8 @@ check-deps:
 	# used to run docker container
 	node -v
 
+init:
+	echo 'DATABASE_URL="mysql://learn-lacinia:password@127.0.0.1:11002/sakila"' > ./backend/apollo/.env
 
 ##################
 # Development
