@@ -133,6 +133,75 @@
                  }"})
 
 
+(def query-address-by-customer
+  {:query "query getAddressByCustomer($customerId: Int!) {
+                    customer(customer_id: $customerId) {
+                       address {
+                          address
+                          address2
+                          address_id
+                          city {
+                                city
+                                country {
+                                         country
+                                         }
+                                }
+                          phone
+                          postal_code
+                          }
+                       first_name
+                       last_name
+                       }
+                    }"})
+
+
+(def query-rental-info-by-customer
+  {:query "query getRentalInfoByCustomer($customerId: Int!) {
+                      customer(customer_id: $customerId) {
+                        payment {
+                          rental {
+                            rental_date
+                            return_date
+                            inventory {
+                              film_id
+                            }
+                          }
+                          payment_date
+                          amount
+                        }
+                        first_name
+                        last_name
+                      }
+                  }"})
+
+
+(def query-film
+  {:query "query getFilm($filmId: Int!) {
+                    film(film_id: $filmId) {
+                      film_id
+                      title
+                      description
+                      release_year
+                      language_id
+                      rental_duration
+                      rental_rate
+                      length
+                      rating
+                      film_category {
+                        category {
+                          name
+                        }
+                      }
+                      film_actor {
+                        actor {
+                          first_name
+                          last_name
+                        }
+                      }
+                    }
+                  }"})
+
+
 (defn- gql-request
   [query endpoint]
   (fn []
@@ -208,12 +277,53 @@
   (println "==== " kw " ====")
   (println)
 
-  (let [url (->> "/graphql" (str (endpoint-url-map kw)))]
+  (let [url (->> "/api/graphql" (str (endpoint-url-map kw)))]
     (assert-request "customers"
                     (-> query-get-customers
                         (gql-request url))
                     {:status 200
-                     [:data :customers 0 :email] "MARY.SMITH@sakilacustomer.org"})))
+                     [:data :customers 0 :email] "MARY.SMITH@sakilacustomer.org"})
+
+    (assert-request "addressByCustomer"
+                    (->
+                      (assoc query-address-by-customer :variables {:customerId 1})
+                      (gql-request url))
+                    {:status 200
+                     [:data :customer :address :city :country :country] "Japan"
+                     [:data :customer :payment] nil})
+
+    (assert-request "rentalInfoByCustomer"
+                    (->
+                      (assoc query-rental-info-by-customer :variables {:customerId 1})
+                      (gql-request url))
+                    {:status 200
+                     [:data :customer :payment 0 :rental :inventory :film_id] 663
+                     [:data :customer :address] nil})
+
+    (assert-request "film"
+                    (->
+                      (assoc query-film :variables {:filmId 663})
+                      (gql-request url))
+                    {:status 200 [:data :film :film_category 0 :category :name] "Classics"})
+
+    ;; 例外系
+    (assert-request "addressByCustomer by not existing id"
+                    (->
+                      (assoc query-address-by-customer :variables {:customerId 0})
+                      (gql-request url))
+                    {:status 200 [:data] {:customer nil}})
+
+    (assert-request "rentalInfoByCustomer by not existing id"
+                    (->
+                      (assoc query-rental-info-by-customer :variables {:customerId 0})
+                      (gql-request url))
+                    {:status 200 [:data] {:customer nil}})
+
+    (assert-request "film by not existing id"
+                    (->
+                      (assoc query-film :variables {:filmId 0})
+                      (gql-request url))
+                    {:status 200 [:data] {:film nil}})))
 
 
 (defn- main
