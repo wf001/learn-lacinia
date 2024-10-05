@@ -14,7 +14,8 @@
 (defn endpoint-url-map
   [name]
   ({:ring-dev "http://localhost:11004"
-    :ring-jar "http://localhost:11015"} name))
+    :ring-jar "http://localhost:11015"
+    :apollo "http://localhost:11003"} name))
 
 
 (defn- failed-color
@@ -121,6 +122,25 @@
   (fn [] (clj-http.client/post endpoint {:as :json :throw-exceptions false})))
 
 
+(def query-get-customers
+  {:query "query getCustomers {
+                   customers {
+                     customer_id
+                     first_name
+                     last_name
+                     email
+                  }
+                 }"})
+
+
+(defn- gql-request
+  [query endpoint]
+  (fn []
+    (clj-http.client/post endpoint {:throw-exceptions false
+                                    :headers {"content-type" "application/json"}
+                                    :body (chs.core/generate-string query)})))
+
+
 (defn- test-rest
   [url]
   (println)
@@ -182,12 +202,27 @@
                   {:status 500 [:message] "Internal server error"}))
 
 
+(defn- test-graphql
+  [kw]
+  (println)
+  (println "==== " kw " ====")
+  (println)
+
+  (let [url (->> "/graphql" (str (endpoint-url-map kw)))]
+    (assert-request "customers"
+                    (-> query-get-customers
+                        (gql-request url))
+                    {:status 200
+                     [:data :customers 0 :email] "MARY.SMITH@sakilacustomer.org"})))
+
+
 (defn- main
   []
   (reset-counter)
 
   (test-rest (endpoint-url-map :ring-dev))
   (test-rest (endpoint-url-map :ring-jar))
+  (test-graphql :apollo)
 
   (println " ---------------------------------------------------------")
   (println "|" (failed-color "Total Errors:") @failed-count (warning-color ", Total Warnings:") @warning-count (passed-color ", Total Passed:") @passed-count)
