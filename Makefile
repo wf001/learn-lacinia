@@ -19,7 +19,8 @@ init:
 serve-db:
 	docker compose up db
 
-
+serve-apollo:
+	yarn --cwd backend/apollo start
 
 
 ##################
