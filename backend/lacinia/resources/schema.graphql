@@ -1,0 +1,87 @@
+type Customer {
+  customer_id: Int
+  store_id: Int
+  first_name: String
+  last_name: String
+  email: String
+  address_id: String
+  active:Boolean
+  address: Address
+  payment: [Payment]
+}
+type Payment {
+  customer_id: Int
+  staff_id:Int
+  rental: Rental
+  amount: Float
+  payment_date: String
+}
+type Rental {
+  rental_id:Int
+  rental_date: String
+  inventory: Inventory
+  customer_id: Int
+  return_date: String
+}
+type Inventory {
+  inventory_id: Int
+  film_id: Int
+  store_id: Int
+}
+type Country {
+  country_id: Int
+  country: String
+  city: [City]
+}
+type City {
+  city_id: Int
+  city: String
+  country: Country
+}
+
+type Address {
+  address_id: Int
+  address: String
+  address2:String
+  city: City
+  postal_code: String
+  phone: String
+}
+
+type Actor {
+  actor_id: Int
+  first_name: String
+  last_name: String
+}
+type FilmActor {
+  actor: Actor
+}
+type Category {
+  category_id: Int
+  name :String
+}
+type FilmCategory {
+  category: Category
+}
+type Film {
+  film_id:Int
+  title: String
+  description: String
+  release_year: String
+  language_id: Int
+  rental_duration: Int
+  rental_rate: Float
+  length: Int
+  rating: String
+  film_category: [FilmCategory]
+  film_actor: [FilmActor]
+}
+
+
+type Query {
+  """
+  Retrieve a list of customers
+  """
+  customers:[Customer]
+}
+

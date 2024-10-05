@@ -3,6 +3,7 @@
 **/.nrepl-port
 **/.clj-kondo/.cache
 **/node_modules
+**/dist
 target
 classes
 **/.env
