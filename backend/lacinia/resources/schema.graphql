@@ -83,5 +83,13 @@ type Query {
   Retrieve a list of customers
   """
   customers:[Customer]
+  """
+  Retrieve customer address information
+  """
+  customer(customer_id: Int!): Customer
+  """
+  Retrieve film information
+  """
+  film(film_id: Int!): Film
 }
 

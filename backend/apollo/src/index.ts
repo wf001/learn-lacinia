@@ -12,6 +12,23 @@ const prisma = new PrismaClient();
 const resolvers = {
   Query: {
     customers: () => prisma.customer.findMany({}),
+    customer: (_: unknown, args: { customer_id: number }) =>
+      prisma.customer.findUnique({
+        where: args,
+        include: {
+          address: { include: { city: { include: { country: true } } } },
+          payment: { include: { rental: { include: { inventory: true } } } },
+        },
+      }),
+    film: (_: unknown, args: { film_id: number }) =>
+      prisma.film.findUnique({
+        where: args,
+        include: {
+          inventory: true,
+          film_actor: { include: { actor: true } },
+          film_category: { include: { category: true } },
+        },
+      }),
   },
 };
 
