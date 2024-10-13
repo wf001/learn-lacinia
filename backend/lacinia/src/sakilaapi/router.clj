@@ -2,10 +2,13 @@
   (:require
     [camel-snake-kebab.core :as csk.core]
     [clojure.core.memoize :as clj.memo]
+    [clojure.tools.logging :as tools.log]
+    [com.walmartlabs.lacinia :as l]
     [muuntaja.core :as muu.core]
     [muuntaja.middleware :as muu.mw]
     [reitit.ring :as rt.ring]
     [ring.middleware.defaults :as rg.mw.defautls]
+    [ring.util.http-response :as rg.u.http-response]
     [sakilaapi.handler :as handler]
     [sakilaapi.middleware.db :as mw.db]
     [sakilaapi.middleware.exception :as mw.exception]))
@@ -27,7 +30,7 @@
 
 
 (defn router
-  [db]
+  [db lacinia]
   (rt.ring/router
     [["/health" {:name ::health
                  :handler handler/handler}]
@@ -47,4 +50,11 @@
         ["customer/:id/rental" {:name ::get-rental-info-by-customer
                                 :handler handler/handler}]
         ["film/:id" {:name ::get-film
-                     :handler handler/handler}]]]]]))
+                     :handler handler/handler}]]
+       ["graphql" {:post {:handler (fn [{:as req :keys [:params]}]
+                                     (tools.log/info (:query params))
+                                     (-> (l/execute (:compiled-schema lacinia)
+                                                    (:query params)
+                                                    (:variables params)
+                                                    req)
+                                         rg.u.http-response/ok))}}]]]]))

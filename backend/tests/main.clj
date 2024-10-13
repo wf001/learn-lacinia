@@ -333,6 +333,7 @@
   (test-rest (endpoint-url-map :ring-dev))
   (test-rest (endpoint-url-map :ring-jar))
   (test-graphql :apollo)
+  (test-graphql :ring-dev)
 
   (println " ---------------------------------------------------------")
   (println "|" (failed-color "Total Errors:") @failed-count (warning-color ", Total Warnings:") @warning-count (passed-color ", Total Passed:") @passed-count)

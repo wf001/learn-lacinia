@@ -11,6 +11,7 @@
                      :prod 3306} 
      :user "learn-lacinia" 
      :password "password"}
+ :graphql {:sdl-path "schema.graphql"}
  :server {:opts {:host "0.0.0.0"
                  :port #long #profile {:default 11014
                                        :dev 11004}

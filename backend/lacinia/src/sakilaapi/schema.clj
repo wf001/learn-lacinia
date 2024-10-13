@@ -12,3 +12,8 @@
               :port s/Int
               :user s/Str
               :password s/Str})
+
+
+(s/defschema Context
+             {:db DBProfile
+              s/Keyword s/Any})

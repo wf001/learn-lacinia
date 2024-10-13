@@ -4,9 +4,11 @@
     [com.stuartsierra.component :as st.component]
     [sakilaapi.component.db :as c.db]
     [sakilaapi.component.handler :as c.handler]
+    [sakilaapi.component.resolver :as c.resolver]
     [sakilaapi.component.server :as c.server]
     [sakilaapi.config :as config]
     [schema.core :as s]
+    [toyokumo.commons.experimental.graphql.lacinia :as tk.c.lacinia]
     [unilog.config :as unilog.cnf]))
 
 
@@ -14,9 +16,13 @@
   [{:as config :keys [:profile]}]
   (st.component/system-map
     :db (c.db/map->Database (:db config))
+    :resolver (c.resolver/map->Resolver {})
+    :lacinia (st.component/using
+               (tk.c.lacinia/map->Lacinia (:graphql config))
+               [:resolver])
     :handler (st.component/using
                (c.handler/map->Handler {:profile profile})
-               [:db])
+               [:db :lacinia])
     :server (st.component/using
               (c.server/map->Jetty9Server (:server config))
               [:handler])))
