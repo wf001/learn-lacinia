@@ -8,6 +8,8 @@
 (defn list-customers
   []
   (s/fn [{:keys [db]} :- resovler.s/Context
-         _ :- s/Any
+         {:keys [offset limit]} :- {:offset s/Int :limit s/Int}
          _ :- s/Any]
-    (e.customer/find-all db)))
+    {:customers  (e.customer/find-all db offset limit)
+     :totalCount (->> (e.customer/count-all db)
+                      :total)}))

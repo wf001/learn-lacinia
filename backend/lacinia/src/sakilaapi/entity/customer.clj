@@ -25,10 +25,22 @@
 
 (s/defn find-all
   :- (s/maybe [Customer])
-  [db :- sakila.schm/DBProfile]
+  [db :- sakila.schm/DBProfile
+   offset :- s/Int
+   limit :- s/Int]
   (->> (-> (hsql.h/select :*)
-           (hsql.h/from :customer))
+           (hsql.h/from :customer)
+           (hsql.h/offset offset)
+           (hsql.h/limit limit))
        (u.db/execute-all db)))
+
+
+(s/defn count-all
+  :-  {:total s/Int}
+  [db :- sakila.schm/DBProfile]
+  (->> (-> (hsql.h/select [[:count :*] :total])
+           (hsql.h/from :customer))
+       (u.db/execute-one db)))
 
 
 (s/defn find-by-id

@@ -6,7 +6,7 @@
 
 (defn- build-resolver
   []
-  {:Query/customers (r.customer/list-customers)})
+  {:Query/paginatedCustomers (r.customer/list-customers)})
 
 
 (defrecord Resolver
