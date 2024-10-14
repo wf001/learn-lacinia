@@ -11,3 +11,8 @@
 (defn not-found
   ([] (not-found {:message "Not found"}))
   ([body] (rg.u.http-res/not-found body)))
+
+
+(defn bad-request
+  ([] (bad-request {:message "Bad request"}))
+  ([body] (rg.u.http-res/bad-request body)))

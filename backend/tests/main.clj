@@ -225,12 +225,18 @@
                        rest-request-get)
                   {:status 200 [:message] "Application is runnig"})
 
-  (assert-request "/api/rest/customers"
-                  (->> "/api/rest/customers"
+  (assert-request "/api/rest/customers?offset=0&limit=10"
+                  (->> "/api/rest/customers?offset=0&limit=10"
                        (str url)
                        rest-request-get)
                   {:status 200 [0 :email] "MARY.SMITH@sakilacustomer.org"}
                   true)
+
+  (assert-request "/api/rest/customers/count"
+                  (->> "/api/rest/customers/count"
+                       (str url)
+                       rest-request-get)
+                  {:status 200 [:total] 599})
 
   (assert-request "/api/rest/customer/1/address"
                   (->> "/api/rest/customer/1/address"
@@ -251,6 +257,24 @@
                   {:status 200 [:title] "ACADEMY DINOSAUR"})
 
   ;; 例外系
+  (assert-request "/rest/customers invalid query1"
+                  (->> "/api/rest/customers?limit=0"
+                       (str url)
+                       rest-request-get)
+                  {:status 400 [:message] "Bad request"})
+
+  (assert-request "/rest/customers invalid query2"
+                  (->> "/api/rest/customers?offset=0"
+                       (str url)
+                       rest-request-get)
+                  {:status 400 [:message] "Bad request"})
+
+  (assert-request "/rest/customers invalid query3"
+                  (->> "/api/rest/customers"
+                       (str url)
+                       rest-request-get)
+                  {:status 400 [:message] "Bad request"})
+
   (assert-request "/api/not-found"
                   (->> "/api/not-found"
                        (str url)

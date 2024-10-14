@@ -81,8 +81,20 @@
 
 
 (defmethod handler/handler [::r/list-customers :get]
+  [{:keys [db query-params]}]
+  (let [offset (some-> (get query-params "offset")
+                       parse-long)
+        limit (some-> (get query-params "limit")
+                      parse-long)]
+    (if (or (nil? offset)  (nil? limit))
+      (u.http/bad-request)
+      (->> (e.customer/find-all db offset limit)
+           rg.u.http-res/ok))))
+
+
+(defmethod handler/handler [::r/count-customers :get]
   [{:keys [db]}]
-  (->> (e.customer/find-all db)
+  (->> (e.customer/count-all db)
        rg.u.http-res/ok))
 
 

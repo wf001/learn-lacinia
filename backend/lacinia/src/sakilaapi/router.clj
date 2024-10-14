@@ -45,6 +45,8 @@
        ["rest/"
         ["customers" {:name ::list-customers
                       :handler handler/handler}]
+        ["customers/count" {:name ::count-customers
+                            :handler handler/handler}]
         ["customer/:id/address" {:name ::get-address-by-customer
                                  :handler handler/handler}]
         ["customer/:id/rental" {:name ::get-rental-info-by-customer
