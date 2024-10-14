@@ -123,12 +123,15 @@
 
 
 (def query-get-customers
-  {:query "query getCustomers {
-                   customers {
-                     customer_id
-                     first_name
-                     last_name
-                     email
+  {:query "query getCustomers ($offset: Int! $limit: Int!) {
+                   paginatedCustomers (offset: $offset limit: $limit) {
+                    customers {
+                       customer_id
+                       first_name
+                       last_name
+                       email
+                    }
+                    totalCount
                   }
                  }"})
 
@@ -278,11 +281,13 @@
   (println)
 
   (let [url (->> "/api/graphql" (str (endpoint-url-map kw)))]
-    (assert-request "customers"
-                    (-> query-get-customers
-                        (gql-request url))
+    (assert-request "getCustomers"
+                    (->
+                      (assoc query-get-customers :variables {:offset 0 :limit 10})
+                      (gql-request url))
                     {:status 200
-                     [:data :customers 0 :email] "MARY.SMITH@sakilacustomer.org"})
+                     [:data :paginatedCustomers :customers 0 :email] "MARY.SMITH@sakilacustomer.org"
+                     [:data :paginatedCustomers :totalCount] 599})
 
     (assert-request "addressByCustomer"
                     (->

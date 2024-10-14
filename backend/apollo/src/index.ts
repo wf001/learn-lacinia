@@ -11,7 +11,18 @@ const prisma = new PrismaClient();
 
 const resolvers = {
   Query: {
-    customers: () => prisma.customer.findMany({}),
+    paginatedCustomers: (
+      _: unknown,
+      args: { offset: number; limit: number },
+    ) => {
+      return {
+        customers: prisma.customer.findMany({
+          skip: args.offset,
+          take: args.limit,
+        }),
+        totalCount: prisma.customer.count(),
+      };
+    },
     customer: (_: unknown, args: { customer_id: number }) =>
       prisma.customer.findUnique({
         where: args,

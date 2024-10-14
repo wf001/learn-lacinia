@@ -77,12 +77,20 @@ type Film {
   film_actor: [FilmActor]
 }
 
+interface Paginated {
+  totalCount: Int!
+}
+
+type PaginatedCustomers implements Paginated{
+  totalCount: Int!
+  customers: [Customer]
+}
 
 type Query {
   """
   Retrieve a list of customers
   """
-  customers:[Customer]
+  paginatedCustomers(offset: Int!, limit: Int!): PaginatedCustomers
   """
   Retrieve customer address information
   """
