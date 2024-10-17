@@ -21,25 +21,25 @@
 
 
 (defn- build-handler
-  [profile db lacinia]
+  [profile allowed-origin db lacinia]
   (let [common-middlewares [rg.logger/wrap-with-logger]
         middlewares (if (= profile :prod)
                       common-middlewares
                       (apply conj dev-middlewares common-middlewares))]
     (rt.ring/ring-handler
-      (router/router db lacinia)
+      (router/router db lacinia allowed-origin)
       (rt.ring/create-default-handler)
       {:middleware middlewares})))
 
 
 (defrecord Handler
-  [handler profile db lacinia]
+  [handler profile allowed-origin db lacinia]
 
   st.component/Lifecycle
 
   (start
     [this]
-    (assoc this :handler (build-handler profile db lacinia)))
+    (assoc this :handler (build-handler profile allowed-origin db lacinia)))
 
 
   (stop

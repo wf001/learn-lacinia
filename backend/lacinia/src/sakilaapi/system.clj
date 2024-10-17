@@ -21,7 +21,8 @@
                (tk.c.lacinia/map->Lacinia (:graphql config))
                [:resolver])
     :handler (st.component/using
-               (c.handler/map->Handler {:profile profile})
+               (c.handler/map->Handler {:profile profile
+                                        :allowed-origin (:allowed-origin config)})
                [:db :lacinia])
     :server (st.component/using
               (c.server/map->Jetty9Server (:server config))

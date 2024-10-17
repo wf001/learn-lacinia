@@ -7,6 +7,7 @@
     [muuntaja.core :as muu.core]
     [muuntaja.middleware :as muu.mw]
     [reitit.ring :as rt.ring]
+    [ring.middleware.cors :as rg.mw.cors]
     [ring.middleware.defaults :as rg.mw.defautls]
     [ring.util.http-response :as rg.u.http-response]
     [sakilaapi.handler :as handler]
@@ -30,7 +31,7 @@
 
 
 (defn router
-  [db lacinia]
+  [db lacinia allowed-origin]
   (rt.ring/router
     [["/health" {:name ::health
                  :handler handler/handler}]
@@ -39,6 +40,9 @@
                          [muu.mw/wrap-format muuntaja-custom-config]
                          mw.exception/wrap-unexpected-exception
                          muu.mw/wrap-params
+                         [rg.mw.cors/wrap-cors
+                          :access-control-allow-origin allowed-origin
+                          :access-control-allow-methods [:get :post]]
                          [mw.db/wrap-db-conn db]]}
        ["health" {:name ::health-json
                   :handler handler/handler}]
