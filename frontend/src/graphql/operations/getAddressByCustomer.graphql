@@ -1,0 +1,19 @@
+query getAddressByCustomer($customerId: Int!) {
+  customer(customer_id: $customerId) {
+    address {
+      address
+      address2
+      address_id
+      city {
+        city
+        country {
+          country
+        }
+      }
+      phone
+      postal_code
+    }
+    first_name
+    last_name
+  }
+}

@@ -1,0 +1,17 @@
+query getRentalInfoByCustomer($customerId: Int!) {
+  customer(customer_id: $customerId) {
+    payment {
+      rental {
+        rental_date
+        return_date
+        inventory {
+          film_id
+        }
+      }
+      payment_date
+      amount
+    }
+    first_name
+    last_name
+  }
+}

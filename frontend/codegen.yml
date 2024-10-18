@@ -1,0 +1,21 @@
+overwrite: true
+schema: "../backend/lacinia/resources/schema.graphql"
+documents: "src/graphql/operations/**.graphql"
+generates:
+  src/generated/graphql-client.ts:
+    plugins: 
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-graphql-request"
+    config:
+      avoitOptional:
+        field: true
+        inputValue: false
+        object: true
+        defaultValue: true
+      enumsAsConst: true
+      scalars:
+        - DateTime: 'Date'
+
+hooks:
+  afterAllFileWrite: "prettier --write"

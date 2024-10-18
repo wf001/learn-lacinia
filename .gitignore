@@ -3,7 +3,10 @@
 **/.nrepl-port
 **/.clj-kondo/.cache
 **/node_modules
+**/.next
 **/dist
 target
 classes
 **/.env
+tmux-client-*.log
+**/tsconfig.tsbuildinfo

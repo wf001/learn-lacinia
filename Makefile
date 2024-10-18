@@ -12,6 +12,7 @@ check-deps:
 
 init:
 	echo 'DATABASE_URL="mysql://learn-lacinia:password@127.0.0.1:11002/sakila"' > ./backend/apollo/.env
+	echo 'NEXT_PUBLIC_API_ENDPOINT="http://localhost:11004"' > ./frontend/.env
 
 ##################
 # Development

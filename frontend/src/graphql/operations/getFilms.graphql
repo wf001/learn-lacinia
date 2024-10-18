@@ -1,0 +1,24 @@
+query getFilm($filmId: Int!) {
+  film(film_id: $filmId) {
+    film_id
+    title
+    description
+    release_year
+    language_id
+    rental_duration
+    rental_rate
+    length
+    rating
+    film_category {
+      category {
+        name
+      }
+    }
+    film_actor {
+      actor {
+        first_name
+        last_name
+      }
+    }
+  }
+}

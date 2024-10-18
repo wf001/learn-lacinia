@@ -1,0 +1,48 @@
+{
+  "name": "sakila",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 11001",
+    "build": "next build",
+    "start": "next start",
+    "check-all": "yarn prettier --check \"./**/*.{js,ts,tsx}\" && yarn eslint \"./**/*.{js,ts,tsx}\" && yarn tsc -p . --noEmit",
+    "fmt-only:prettier": "git diff --name-only --diff-filter d |grep -v yarn.lock | xargs yarn prettier --write",
+    "fmt-only:eslint": "git diff --name-only --diff-filter d |grep -v yarn.lock | xargs yarn eslint --fix",
+    "fmt-only": "yarn run fmt-only:prettier && yarn run fmt-only:eslint",
+    "fmt-all": "yarn prettier --write \"./**/*.{js,ts,tsx}\" && yarn eslint --fix \"./**/*.{js,ts,tsx}\"",
+    "test-only": "yarn run jest --randomize --onlyChanged",
+    "ci": "yarn run fmt-all && yarn run check-all && yarn run build",
+    "codegen": "graphql-codegen --config codegen.yml"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/material": "^5.15.20",
+    "@tanstack/react-query": "^5.24.1",
+    "dayjs": "^1.11.10",
+    "graphql-request": "^6.1.0",
+    "next": "14.1.1",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "5.0.2",
+    "@graphql-codegen/client-preset": "4.2.4",
+    "@graphql-codegen/typescript": "^4.0.6",
+    "@graphql-codegen/typescript-graphql-request": "^6.2.0",
+    "@graphql-codegen/typescript-operations": "^4.2.0",
+    "@tanstack/react-query-devtools": "^5.24.1",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.1.1",
+    "graphql": "^16.8.1",
+    "postcss": "^8",
+    "prettier": "^3.2.5",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
+  }
+}
