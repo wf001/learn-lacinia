@@ -16,7 +16,7 @@
               :rental_date LocalDateTime
               :inventory_id s/Int
               :customer_id s/Int
-              :return_date LocalDateTime
+              :return_date (s/maybe LocalDateTime)
               :staff_id s/Int
               :last_update Timestamp})
 
